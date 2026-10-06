@@ -1,5 +1,6 @@
 import React from "react";
 import { getSourceById } from "../content/sources";
+import { getSourceLinkLabel } from "../utils/sourceLinks";
 
 interface SourceListProps {
   sourceIds: string[];
@@ -37,7 +38,7 @@ export const SourceList: React.FC<SourceListProps> = ({ sourceIds }) => {
                 )}
               </td>
               <td>{src.publisher}</td>
-              <td>{src.dataYear ? src.dataYear : src.publishedAt ? src.publishedAt.slice(0, 4) : "—"}</td>
+              <td>{src.dataYear ? src.dataYear : src.publishedAt ? src.publishedAt.slice(0, 4) : "Tidak tersedia"}</td>
               <td style={{ fontSize: "0.85rem" }}>{src.scope}</td>
               <td>
                 <a
@@ -46,9 +47,9 @@ export const SourceList: React.FC<SourceListProps> = ({ sourceIds }) => {
                   rel="noopener noreferrer"
                   className="btn btn-secondary"
                   style={{ padding: "0.3rem 0.65rem", fontSize: "0.8rem" }}
-                  aria-label={`Buka dokumen rujukan: ${src.title}`}
+                  aria-label={`${getSourceLinkLabel(src)}: ${src.title}`}
                 >
-                  Buka Dokumen ↗
+                  {getSourceLinkLabel(src)} ↗
                 </a>
               </td>
             </tr>

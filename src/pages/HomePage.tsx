@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getAllVillages, aggregateThreeVillages } from "../content/villages";
 import { getAllSources } from "../content/sources";
 import { VillageCard } from "../components/VillageCard";
+import { VillageMap } from "../components/VillageMap";
 import { SourceCard } from "../components/SourceCard";
 import { StatCard } from "../components/StatCard";
 import {
@@ -15,10 +16,11 @@ import {
   LandmarkIcon
 } from "../components/Icons";
 import { usePageMeta } from "../utils/seo";
+import { AcademicNotice } from "../components/AcademicNotice";
 
 export const HomePage: React.FC = () => {
   usePageMeta(
-    "Mengenal Dagen, Ngringo, dan Sroyo — Profil Desa Kecamatan Jaten",
+    "Mengenal Dagen, Ngringo, dan Sroyo: Profil Desa Kecamatan Jaten",
     "Pusat informasi profil wilayah, demografi penduduk 2024, bagan kelembagaan, dan rujukan dokumen tiga desa di Kecamatan Jaten, Kabupaten Karanganyar."
   );
 
@@ -31,9 +33,10 @@ export const HomePage: React.FC = () => {
 
   return (
     <div>
-      {/* 1. Hero Section (Section 5) — Photorealistic Balai Desa banner matching reference */}
+      <AcademicNotice />
+      {/* 1. Hero Section (Section 5): Photorealistic Balai Desa banner matching reference */}
       <section className="hero-section" aria-labelledby="hero-title">
-        {/* Floating Social Icons (Left) — matching reference portal */}
+        {/* Floating Social Icons (Left): matching reference portal */}
         <div className="hero-floating-socials" aria-label="Media Informasi Publik">
           <a href="https://instagram.com/kecamatanjaten/" target="_blank" rel="noopener noreferrer" className="social-icon-btn social-ig" title="Instagram Resmi Informasi Desa">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -79,17 +82,10 @@ export const HomePage: React.FC = () => {
               </Link>
             </div>
 
-            <div className="hero-notice">
-              <span style={{ fontSize: "1rem", lineHeight: 1 }} aria-hidden="true">ℹ️</span>
-              <span>
-                <strong>Catatan Akademik:</strong> Website ini adalah proyek tugas kuliah Sistem Terdistribusi dan <em>bukan portal layanan resmi</em> pemerintah desa. Tidak melayani administrasi kependudukan daring.
-              </span>
-            </div>
-
             <div className="hero-stats">
               <div className="hero-stat">
                 <span className="hero-stat-value">3</span>
-                <span className="hero-stat-label">Desa Kajian</span>
+                <span className="hero-stat-label">Desa</span>
               </div>
               <div className="hero-stat">
                 <span className="hero-stat-value">{aggregateThreeVillages.population.total.toLocaleString("id-ID")}</span>
@@ -122,6 +118,16 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 3. Section Layanan / Jelajahi Informasi (Section 7) */}
+      <section id="peta-desa" className="page-section-alt" aria-labelledby="section-peta-title">
+        <div className="container">
+          <div className="section-header">
+            <h2 id="section-peta-title">Temukan Tiga Desa di Peta</h2>
+            <p>Kenali lokasi Dagen, Ngringo, dan Sroyo di Kecamatan Jaten. Pilih pin atau nama desa untuk melihat profil dan petunjuk arah.</p>
+          </div>
+          <VillageMap title="Peta lokasi Desa Dagen, Ngringo, dan Sroyo" />
+        </div>
+      </section>
+
       <section className="page-section-alt" aria-labelledby="section-info-title">
         <div className="container">
           <div className="section-header">
@@ -299,7 +305,13 @@ export const HomePage: React.FC = () => {
                   <td>{aggregateThreeVillages.administration.dusun}</td>
                   <td>{aggregateThreeVillages.administration.rw}</td>
                   <td>{aggregateThreeVillages.administration.rt}</td>
-                  <td>3.497</td>
+                  <td>
+                    {aggregateThreeVillages.areaHa > 0
+                      ? Math.round(
+                          aggregateThreeVillages.population.total / (aggregateThreeVillages.areaHa / 100)
+                        ).toLocaleString("id-ID")
+                      : "Tidak tersedia"}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -314,17 +326,17 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 5. Section Profil & Konteks Wilayah (Section 9) */}
-      <section className="page-section-alt" aria-labelledby="section-konteks-title">
+      <section id="konteks-wilayah" className="page-section-alt" aria-labelledby="section-konteks-title">
         <div className="container">
           <div className="profile-section">
             <div>
               <div className="section-header-left">
-                <span className="academic-badge" style={{ marginBottom: "0.5rem" }}>
+                <span className="information-badge" style={{ marginBottom: "0.5rem" }}>
                   Konteks Geografis & Administrasi
                 </span>
                 <h2 id="section-konteks-title">Wilayah Strategis di Koridor Solo–Karanganyar</h2>
                 <p>
-                  Kecamatan Jaten merupakan salah satu sentra penyangga utama Kabupaten Karanganyar yang berbatasan langsung dengan Kota Surakarta di sisi barat. Tiga desa yang menjadi fokus studi ini memiliki karakteristik bentang wilayah yang saling melengkapi:
+                  Kecamatan Jaten merupakan salah satu sentra penyangga utama Kabupaten Karanganyar yang berbatasan langsung dengan Kota Surakarta di sisi barat. Tiga desa yang menjadi cakupan website ini memiliki karakteristik bentang wilayah yang saling melengkapi:
                 </p>
               </div>
 
@@ -435,7 +447,7 @@ export const HomePage: React.FC = () => {
           <div style={{ maxWidth: "800px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1rem" }}>
             <div style={{ background: "var(--color-surface)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-lg)", padding: "1.25rem 1.5rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem", flexWrap: "wrap", gap: "0.5rem" }}>
-                <strong style={{ color: "var(--color-primary)" }}>Pembaruan PRD Versi 2.1 — Layanan Administrasi Publik</strong>
+                <strong style={{ color: "var(--color-primary)" }}>Pembaruan Informasi: Layanan Administrasi Publik</strong>
                 <span style={{ fontSize: "0.78rem", background: "var(--color-surface-soft)", padding: "0.2rem 0.6rem", borderRadius: "var(--radius-xs)" }}>
                   4 Oktober 2026
                 </span>

@@ -5,6 +5,7 @@ import { NotFoundPage } from "./NotFoundPage";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { StatCard } from "../components/StatCard";
 import { VillageSectionNav } from "../components/VillageSectionNav";
+import { VillageMap } from "../components/VillageMap";
 import { OrganizationTree } from "../components/OrganizationTree";
 import { ContactCard } from "../components/ContactCard";
 import { ServiceCard } from "../components/ServiceCard";
@@ -26,19 +27,16 @@ import {
   PhoneIcon
 } from "../components/Icons";
 import { usePageMeta } from "../utils/seo";
-
-const villagePhotos: Record<string, string> = {
-  dagen: "/images/Kantor-desa-dagen-jaten-karanganyar.jpg",
-  ngringo: "/images/Kantor-desa-ngringo-jaten-karanganyar.jpg",
-  sroyo: "/images/Kantor-desa-sroyo-jaten-karanganyar.jpg"
-};
+import { getVillageImage } from "../utils/villageImages";
+import { districtContact } from "../content/site";
+import { LoadingImage } from "../components/Loading";
 
 export const VillagePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const village = slug ? getVillageBySlug(slug) : undefined;
 
   usePageMeta(
-    village ? `Profil Desa ${village.name} — Kecamatan Jaten` : "Profil Desa",
+    village ? `Profil Desa ${village.name}: Kecamatan Jaten` : "Profil Desa",
     village?.summary?.value || `Informasi statistik wilayah, demografi, kelembagaan, dan profil Desa ${village?.name || ""}, Kecamatan Jaten.`
   );
 
@@ -66,7 +64,7 @@ export const VillagePage: React.FC = () => {
     sroyo: { kemendagri: "33.13.11.2007", kodePos: "57731" }
   };
   const codes = villageCodes[village.slug] || {};
-  const photoUrl = villagePhotos[village.slug] || "/images/balai_desa_hero.jpg";
+  const photoUrl = getVillageImage(village.slug);
 
   // Calculations for gender balance display
   const totalPop = village.population?.value.total || 0;
@@ -90,10 +88,8 @@ export const VillagePage: React.FC = () => {
         {/* 2. Authentic Civic Photo Hero Banner */}
         <header
           className="village-hero-banner"
-          style={{
-            backgroundImage: `linear-gradient(to right, rgba(7, 31, 54, 0.95) 0%, rgba(7, 31, 54, 0.82) 55%, rgba(7, 31, 54, 0.45) 100%), url('${photoUrl}')`
-          }}
         >
+          <LoadingImage key={photoUrl} className="village-hero-photo" src={photoUrl} loading="eager" />
           <div className="village-hero-content">
             <div className="village-hero-eyebrow">
               <LandmarkIcon size={14} color="#BAE6FD" />
@@ -283,6 +279,8 @@ export const VillagePage: React.FC = () => {
                 <p style={{ color: "var(--color-text-muted)", marginBottom: "1.5rem" }}>
                   Rincian data kependudukan berdasarkan jenis kelamin dan pembagian kewilayahan bersumber dari BPS Kabupaten Karanganyar 2024.
                 </p>
+
+                <VillageMap villageSlug={village.slug} title={`Peta wilayah Desa ${village.name}`} />
 
                 {/* Visual Distribution Summary */}
                 {village.population && (
@@ -529,7 +527,7 @@ export const VillagePage: React.FC = () => {
 
               <PublicNotice type="warning">
                 <p>
-                  <strong>Pemberitahuan Layanan Publik:</strong> Website ini adalah proyek informasi akademik dan <em>bukan kanal pengajuan surat daring</em>. Seluruh permohonan administrasi kependudukan tetap diproses langsung melalui Kantor Desa setempat atau aplikasi resmi Disdukcapil Kabupaten Karanganyar.
+                  <strong>Pemberitahuan Layanan Publik:</strong> Permohonan administrasi kependudukan dapat diajukan melalui Kantor Desa setempat atau aplikasi resmi Disdukcapil Kabupaten Karanganyar.
                 </p>
               </PublicNotice>
 
@@ -553,7 +551,7 @@ export const VillagePage: React.FC = () => {
                   <ChartBarIcon size={22} color="var(--color-primary)" />
                   Fasilitas Publik & Potensi Wilayah
                 </h2>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.25rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: "1.25rem" }}>
                   {village.publicInformation?.map((item, idx) => {
                     const isEdu = item.title.toLowerCase().includes("pendidikan") || item.title.toLowerCase().includes("sekolah");
                     return (
@@ -583,7 +581,7 @@ export const VillagePage: React.FC = () => {
                 <MapPinIcon size={22} color="var(--color-primary)" />
                 Kontak & Lokasi Kantor
               </h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: "1.5rem" }}>
                 <div>
                   <ContactCard
                     villageName={village.name}
@@ -621,16 +619,25 @@ export const VillagePage: React.FC = () => {
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", fontSize: "0.85rem" }}>
                       <div style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
                         <MapPinIcon size={16} color="var(--color-primary)" />
-                        <span>Jl. Raya Jaten No. 85, Jaten, Kabupaten Karanganyar</span>
+                        <span>{districtContact.address}</span>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                         <PhoneIcon size={16} color="var(--color-primary)" />
-                        <span>(0271) 821319</span>
+                        <span>{districtContact.phone}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </section>
+
+            <section id="peta-kantor" className="village-section" aria-labelledby="peta-kantor-title">
+              <h2 id="peta-kantor-title" className="village-section-title">
+                <MapPinIcon size={22} color="var(--color-primary)" />
+                Peta Lokasi Pelayanan
+              </h2>
+              <p>Lihat lokasi desa dan rujukan kantor pelayanan. Pilih lokasi untuk membuka petunjuk arah atau pencarian alamat kantor.</p>
+              <VillageMap villageSlug={village.slug} offices title={`Peta kantor pelayanan Desa ${village.name} dan Kecamatan Jaten`} />
             </section>
 
             {/* Sumber Halaman */}
@@ -730,6 +737,11 @@ export const VillagePage: React.FC = () => {
                   </a>
                 </li>
                 <li>
+                  <a href="#peta-kantor" className="sidebar-nav-link">
+                    <MapPinIcon size={14} /> Peta Pelayanan
+                  </a>
+                </li>
+                <li>
                   <a href="#sumber-halaman" className="sidebar-nav-link">
                     <FileTextIcon size={14} /> Rujukan Dokumen
                   </a>
@@ -751,7 +763,7 @@ export const VillagePage: React.FC = () => {
                     <div
                       className="other-village-thumb"
                       style={{
-                        backgroundImage: `url('${villagePhotos[other.slug] || "/images/balai_desa_hero.jpg"}')`
+                        backgroundImage: `url('${getVillageImage(other.slug)}')`
                       }}
                     />
                     <div className="other-village-info">

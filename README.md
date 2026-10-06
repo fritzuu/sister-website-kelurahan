@@ -25,8 +25,8 @@ sister-website-kelurahan/
 │   ├── images/
 │   │   └── README.md        # Panduan perizinan, atribusi, dan alt-text gambar
 │   ├── _redirects           # Aturan rewrite SPA fallback untuk static host
-│   ├── robots.txt           # Kebijakan perayapan mesin pencari
-│   └── sitemap.xml          # Peta situs 5 rute utama
+│   ├── robots.txt           # Dihasilkan saat build, bukan file sumber
+│   └── sitemap.xml          # Dihasilkan saat build setelah domain diisi
 ├── src/
 │   ├── components/          # Komponen antarmuka modular
 │   │   ├── Breadcrumbs.tsx
@@ -121,7 +121,7 @@ Aplikasi mengimplementasikan rute berbasis React Router:
 
 Karena aplikasi ini adalah Single Page Application (SPA) berbasis `BrowserRouter`, web server statis (seperti Netlify, Vercel, Cloudflare Pages, GitHub Pages, Apache, atau Nginx) harus dikonfigurasi untuk mengalihkan seluruh permintaan rute ke `index.html`.
 
-- **Netlify & Cloudflare Pages**: Berkas `public/_redirects` telah disediakan dengan aturan:
+- **Netlify & Cloudflare Pages**: Berkas `public/_redirects` tersedia dengan aturan:
   ```text
   /*    /index.html   200
   ```
@@ -172,3 +172,11 @@ Buka `src/content/sources.ts`:
 - Mekanisme pemindahan fokus otomatis ke judul halaman (`<h1>`) saat berpindah rute untuk navigasi pembaca layar dan keyboard.
 - Indikator fokus terlihat (`:focus-visible`) di seluruh link dan tombol interaktif.
 - Tata letak responsif penuh dari layar ponsel minimum 360px hingga layar desktop 1120px tanpa adanya _horizontal overflow_.
+
+## Foto, peta, dan domain deployment
+
+Foto yang digunakan aplikasi berada di `public/images/*.webp`. Foto asli disimpan di `assets/source-images/` dan tidak disalin ke hasil build. Jalankan `npm run images:optimize` setelah mengganti foto asli.
+
+Leaflet dibundle bersama aplikasi; gambar peta memakai tile OpenStreetMap. Pin memakai koordinat lokal. Kantor yang belum memiliki koordinat hanya menyediakan tautan pencarian lokasi.
+
+Salin `.env.example` ke `.env.local`, kemudian isi `VITE_SITE_URL` dengan origin domain deployment sebelum build. Sitemap berisi URL absolut dan robots.txt dihasilkan saat build. Jika domain belum diisi, build tetap berjalan dan tidak menerbitkan sitemap yang tidak valid.

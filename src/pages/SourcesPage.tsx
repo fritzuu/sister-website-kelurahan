@@ -1,37 +1,22 @@
 import React, { useState } from "react";
 import { getAllSources } from "../content/sources";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { PublicNotice } from "../components/PublicNotice";
 import { ExternalLinkIcon, FileTextIcon, ChartBarIcon, UsersIcon, ShieldCheckIcon } from "../components/Icons";
 import { usePageMeta } from "../utils/seo";
+import { getSourceLinkLabel } from "../utils/sourceLinks";
 
 export const SourcesPage: React.FC = () => {
   usePageMeta(
-    "Katalog Sumber Data & Metodologi — Kecamatan Jaten",
+    "Katalog Sumber Data & Metodologi: Kecamatan Jaten",
     "Daftar lengkap rujukan dokumen resmi, penerbit, metodologi penghitungan, dan batasan data website profil tiga desa Kecamatan Jaten."
   );
 
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const sources = getAllSources();
 
-  // Categorize sources based on PRD Section 12
-  const categorizedSources = sources.map((src) => {
-    let category = "lainnya";
-    if (src.id.includes("bps") || src.id.includes("dapodik") || src.id.includes("kemendikdasmen")) {
-      category = "statistik";
-    } else if (src.id.includes("perangkat") || src.id.includes("struktur") || src.id.includes("tusi") || src.id.includes("pj-ngringo") || src.id.includes("pleret")) {
-      category = "pemerintahan";
-    } else if (src.id.includes("adminduk") || src.id.includes("standar-pelayanan") || src.id.includes("dip")) {
-      category = "layanan";
-    } else {
-      category = "wilayah";
-    }
-    return { ...src, category };
-  });
-
   const filteredSources = activeCategory === "all"
-    ? categorizedSources
-    : categorizedSources.filter((s) => s.category === activeCategory);
+    ? sources
+    : sources.filter((s) => s.category === activeCategory);
 
   return (
     <div className="container">
@@ -49,7 +34,7 @@ export const SourcesPage: React.FC = () => {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.4rem" }}>
-          <span className="academic-badge">Transparansi Rujukan</span>
+          <span className="information-badge">Transparansi Rujukan</span>
           <span style={{ fontSize: "0.85rem", color: "var(--color-text-subtle)" }}>
             Dokumen Resmi • Open Data • BPS
           </span>
@@ -62,12 +47,10 @@ export const SourcesPage: React.FC = () => {
         </p>
       </header>
 
-      <PublicNotice type="academic" />
-
-      {/* Filter Tabs — inspired by reference portal classification tabs */}
+      {/* Filter Tabs: inspired by reference portal classification tabs */}
       <section aria-labelledby="sources-table-heading" style={{ marginBottom: "2.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem", flexWrap: "wrap", gap: "1rem" }}>
-          <h2 id="sources-table-heading" style={{ margin: 0 }}>
+          <h2 id="sources-table-heading" style={{ margin: 0 }} aria-live="polite">
             Daftar Dokumen & Basis Data ({filteredSources.length} Rujukan)
           </h2>
 
@@ -75,6 +58,7 @@ export const SourcesPage: React.FC = () => {
             <button
               type="button"
               className={`btn btn-sm ${activeCategory === "all" ? "btn-primary" : "btn-secondary"}`}
+              aria-pressed={activeCategory === "all"}
               onClick={() => setActiveCategory("all")}
             >
               Semua Sumber
@@ -82,6 +66,7 @@ export const SourcesPage: React.FC = () => {
             <button
               type="button"
               className={`btn btn-sm ${activeCategory === "statistik" ? "btn-primary" : "btn-secondary"}`}
+              aria-pressed={activeCategory === "statistik"}
               onClick={() => setActiveCategory("statistik")}
             >
               Data Statistik
@@ -89,6 +74,7 @@ export const SourcesPage: React.FC = () => {
             <button
               type="button"
               className={`btn btn-sm ${activeCategory === "pemerintahan" ? "btn-primary" : "btn-secondary"}`}
+              aria-pressed={activeCategory === "pemerintahan"}
               onClick={() => setActiveCategory("pemerintahan")}
             >
               Data Pemerintahan
@@ -96,6 +82,7 @@ export const SourcesPage: React.FC = () => {
             <button
               type="button"
               className={`btn btn-sm ${activeCategory === "layanan" ? "btn-primary" : "btn-secondary"}`}
+              aria-pressed={activeCategory === "layanan"}
               onClick={() => setActiveCategory("layanan")}
             >
               Layanan Publik
@@ -103,6 +90,7 @@ export const SourcesPage: React.FC = () => {
             <button
               type="button"
               className={`btn btn-sm ${activeCategory === "wilayah" ? "btn-primary" : "btn-secondary"}`}
+              aria-pressed={activeCategory === "wilayah"}
               onClick={() => setActiveCategory("wilayah")}
             >
               Wilayah & Lainnya
@@ -141,7 +129,7 @@ export const SourcesPage: React.FC = () => {
                       ? `Tahun ${src.dataYear}`
                       : src.publishedAt
                       ? src.publishedAt
-                      : "—"}
+                      : "Tidak tersedia"}
                   </td>
                   <td style={{ fontSize: "0.88rem" }}>{src.scope}</td>
                   <td>
@@ -151,9 +139,9 @@ export const SourcesPage: React.FC = () => {
                       rel="noopener noreferrer"
                       className="btn btn-secondary btn-sm"
                       style={{ whiteSpace: "nowrap" }}
-                      aria-label={`Buka dokumen rujukan ${src.title}`}
+                      aria-label={`${getSourceLinkLabel(src)}: ${src.title}`}
                     >
-                      Buka Rujukan
+                      {getSourceLinkLabel(src)}
                       <ExternalLinkIcon size={12} />
                     </a>
                   </td>
@@ -183,7 +171,7 @@ export const SourcesPage: React.FC = () => {
           Untuk menjamin akurasi dan mencegah misleading informasi, tim kurasi menerapkan prinsip integritas data berikut:
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: "1.5rem" }}>
           <div style={{ background: "var(--color-surface-alt)", padding: "1.25rem", borderRadius: "var(--radius-md)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
               <ChartBarIcon size={20} color="var(--color-primary)" />
