@@ -1,0 +1,5 @@
+# Robots.txt for Website Profil Desa Kecamatan Jaten
+User-agent: *
+Allow: /
+
+Sitemap: /sitemap.xml
