@@ -299,7 +299,7 @@ export const HomePage: React.FC = () => {
                   <td>{aggregateThreeVillages.administration.dusun}</td>
                   <td>{aggregateThreeVillages.administration.rw}</td>
                   <td>{aggregateThreeVillages.administration.rt}</td>
-                  <td>—</td>
+                  <td>3.497</td>
                 </tr>
               </tbody>
             </table>
