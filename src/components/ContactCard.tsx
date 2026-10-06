@@ -44,6 +44,7 @@ export const ContactCard: React.FC<ContactCardProps> = ({
             <p className="contact-pending-action-text">
               Warga dapat mengurus administrasi langsung di Balai Desa {villageName} pada jam kerja, atau melalui koordinasi Kantor Kecamatan Jaten.
             </p>
+            <a href="#peta-kantor" className="contact-tile-link">Lihat Peta Pelayanan ↓</a>
           </div>
         </div>
       </div>
@@ -115,6 +116,15 @@ export const ContactCard: React.FC<ContactCardProps> = ({
               </a>
             </div>
           </div>
+        )}
+      </div>
+
+      <div className="contact-map-action">
+        <a href="#peta-kantor" className="contact-tile-link">Lihat Peta Lokasi Kantor ↓</a>
+        {contact.mapUrl && (
+          <a href={contact.mapUrl} target="_blank" rel="noopener noreferrer" className="contact-tile-link">
+            Buka Lokasi Kantor ↗
+          </a>
         )}
       </div>
 

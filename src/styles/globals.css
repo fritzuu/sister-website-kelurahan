@@ -1,12 +1,13 @@
 /* ==========================================================================
-   Jaten: Profil Tiga Desa — Design System
+   Jaten: Profil Tiga Desa: Design System
    Inspired by modern Indonesian village portal layouts.
    Clean, formal, trustworthy, information-dense with good whitespace.
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');:root {
-  /* Primary palette — Ocean Blue, matching modern Indonesian government/village portals */
+  /* Primary palette: Ocean Blue, matching modern Indonesian government/village portals */
   --color-primary: #005B94;
+  --color-primary-dark: #00436F;
   --color-primary-hover: #00436F;
   --color-primary-light: #E0F2FE;
   --color-primary-lighter: #F0F9FF;
@@ -16,7 +17,7 @@
   --color-primary-700: #0369A1;
   --color-primary-800: #075985;
 
-  /* Secondary — Sky blue accent */
+  /* Secondary: Sky blue accent */
   --color-secondary: #0284C7;
   --color-secondary-light: #BAE6FD;
 
@@ -24,7 +25,7 @@
   --color-accent: #D97706;
   --color-accent-light: #FEF3C7;
 
-  /* Neutrals — Crisp government portal surfaces */
+  /* Neutrals: Crisp government portal surfaces */
   --color-bg: #F4F7FA;
   --color-surface: #FFFFFF;
   --color-surface-alt: #F0F5F9;
@@ -34,7 +35,7 @@
   --color-text-main: #0F172A;
   --color-text-body: #334155;
   --color-text-muted: #64748B;
-  --color-text-subtle: #94A3B8;
+  --color-text-subtle: #526176;
   --color-text-on-dark: #F8FAFC;
 
   --color-border: #E2E8F0;
@@ -94,6 +95,10 @@ body { min-height: 100vh; display: flex; flex-direction: column; overflow-x: hid
 #root { min-height: 100vh; display: flex; flex-direction: column; }
 
 /* ===== Focus ===== */
+.route-focus-heading:focus {
+  outline: none;
+}
+
 :focus-visible {
   outline: 3px solid var(--color-secondary);
   outline-offset: 2px;
@@ -525,7 +530,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
 .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; }
 
 /* ==========================================================================
-   HERO SECTION — Photo Banner matching kel-sondakan reference
+   HERO SECTION: Photo Banner matching kel-sondakan reference
    ========================================================================== */
 .hero-section {
   position: relative;
@@ -549,7 +554,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
   background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
 }
 
-/* Floating social media icons on the left — modeled directly after reference */
+/* Floating social media icons on the left: modeled directly after reference */
 .hero-floating-socials {
   position: absolute;
   left: 1.5rem;
@@ -712,10 +717,10 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
    ========================================================================== */
 .village-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
 }
-@media (max-width: 900px) { .village-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) { .village-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .village-grid { grid-template-columns: 1fr; } }
 
 .village-card {
@@ -816,7 +821,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
    ========================================================================== */
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: 1.25rem;
 }
 .info-card {
@@ -868,7 +873,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
    ========================================================================== */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
   gap: 1rem;
 }
 
@@ -916,7 +921,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
    ========================================================================== */
 .source-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 1.25rem;
 }
 .source-card {
@@ -1014,7 +1019,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
 /* ==========================================================================
    ACADEMIC BADGE
    ========================================================================== */
-.academic-badge {
+.information-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -1079,7 +1084,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
 }
 
 /* ==========================================================================
-   VILLAGE PAGE — Section Nav & Layout
+   VILLAGE PAGE: Section Nav & Layout
    ========================================================================== */
 .village-layout {
   display: grid;
@@ -1421,7 +1426,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
 
 .mission-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -1566,7 +1571,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
 }
 .territory-units-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
   margin-top: 0.85rem;
 }
@@ -1643,7 +1648,7 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
 }
 .org-tiers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: 1.25rem;
 }
 .org-column-card {
@@ -2027,6 +2032,27 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
   flex: 1;
 }
 
+/* Keep homepage anchor targets below the sticky header. */
+.page-section[id],
+.page-section-alt[id] {
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+.village-card-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.village-card-top::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7, 31, 54, 0.94), rgba(7, 31, 54, 0.45) 55%, rgba(7, 31, 54, 0.2));
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* ===== Village Sections ===== */
 .village-section {
   padding-top: 1.5rem;
@@ -2182,4 +2208,44 @@ a:hover { color: var(--color-primary-hover); text-decoration-thickness: 2px; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Adapt narrow screens, landscape phones, and zoomed views. */
+img { max-width: 100%; }
+.site-brand-group, .site-brand-text, .mobile-nav-container,
+.village-card, .source-card, .org-column-card { min-width: 0; }
+.source-card, .contact-card, .org-column-card, .footer-grid { overflow-wrap: anywhere; }
+.org-card-head { min-width: 0; width: min(100%, 380px); }
+@media (max-width: 992px) {
+ .nav-links { display: none; }
+ .mobile-nav-container { display: flex; min-width: 0; }
+ .mobile-select { max-width: 100%; min-height: 44px; padding: .5rem; font: inherit; border: 1px solid var(--color-border-dark); border-radius: var(--radius-sm); background: white; color: var(--color-text-main); }
+ .top-bar { display: none; }
+}
+@media (max-width: 600px) {
+ .container { padding-inline: 1rem; }
+ .site-header .container { gap: .5rem; }
+ .site-brand-group { flex: 1; }
+ .mobile-nav-container { flex: 0 1 42%; }
+ .mobile-select { width: 100%; font-size: .85rem; }
+ .site-logo { min-width: 0; }
+ .site-logo-subtitle { font-size: .65rem; }
+ .hero-stats { gap: 1rem; }
+ .hero-actions .btn { flex: 1 1 200px; justify-content: center; }
+ .section-heading { flex-wrap: wrap; }
+ .profile-section, .village-grid, .footer-grid { min-width: 0; }
+}
+@media (max-width: 360px) {
+ .brand-sup { font-size: .6rem; }
+ .site-logo-title { font-size: 1rem; }
+ .site-logo-subtitle { font-size: .6rem; }
+ .territory-units-grid { gap: .35rem; }
+}
+
+@media (max-width: 600px) {
+ .btn { max-width: 100%; white-space: normal; text-align: center; }
+ .site-brand-text { width: 100%; }
+ .site-logo-subtitle { overflow-wrap: anywhere; }
+ .site-logo { width: 100%; }
+ .table-wrapper { min-width: 0; }
 }

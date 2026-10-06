@@ -272,7 +272,7 @@ export const villagesRegistry: Record<string, Village> = {
     ],
     contact: {
       value: {
-        address: "Jalan Balai Desa No. 43, Dusun Palur, Desa Ngringo, Kecamatan Jaten, Kabupaten Karanganyar, 57772"
+        address: "Desa Ngringo, Kecamatan Jaten, Kabupaten Karanganyar, Jawa Tengah"
       },
       sourceIds: ["opendata-ngringo-alamat"],
       asOf: "2023",
@@ -301,7 +301,7 @@ export const villagesRegistry: Record<string, Village> = {
     regency: "Karanganyar",
     province: "Jawa Tengah",
     summary: {
-      value: "Desa Sroyo adalah desa terluas di antara tiga desa studi ini (459,78 ha) dengan kombinasi kawasan pemukiman, sentra industri, dan lahan pertanian.",
+      value: "Desa Sroyo adalah desa terluas di antara tiga desa ini (459,78 ha) dengan kombinasi kawasan pemukiman, sentra industri, dan lahan pertanian.",
       sourceIds: ["bps-jaten-2025"],
       asOf: "2024",
       verifiedAt: "2026-10-02",

@@ -14,11 +14,7 @@ export const SourceBadge: React.FC<SourceBadgeProps> = ({ status, className = ""
         </span>
       );
     case "needs-confirmation":
-      return (
-        <span className={`source-badge source-badge-needs ${className}`}>
-          ⚠ Perlu Konfirmasi
-        </span>
-      );
+      return null;
     case "historical":
       return (
         <span className={`source-badge source-badge-historical ${className}`}>

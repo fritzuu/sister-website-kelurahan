@@ -3,6 +3,7 @@ import type { Source } from "../types/village";
 export const sourcesRegistry: Record<string, Source> = {
   "bps-jaten-2025": {
     id: "bps-jaten-2025",
+    category: "statistik",
     title: "Kecamatan Jaten Dalam Angka 2025",
     publisher: "BPS Kabupaten Karanganyar",
     url: "https://karanganyarkab.bps.go.id",
@@ -14,6 +15,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-dagen-profil": {
     id: "opendata-dagen-profil",
+    category: "wilayah",
     title: "Profil Desa Dagen (Visi dan Misi)",
     publisher: "Pemerintah Desa Dagen melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -23,6 +25,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-dagen-sejarah": {
     id: "opendata-dagen-sejarah",
+    category: "wilayah",
     title: "Sejarah Desa Dagen",
     publisher: "Pemerintah Desa Dagen melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -32,6 +35,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-ngringo-profil-2023": {
     id: "opendata-ngringo-profil-2023",
+    category: "pemerintahan",
     title: "Profil Perangkat Desa Ngringo Tahun 2023",
     publisher: "Pemerintah Desa Ngringo melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -42,6 +46,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-ngringo-alamat": {
     id: "opendata-ngringo-alamat",
+    category: "wilayah",
     title: "Alamat Kantor Desa Ngringo",
     publisher: "Pemerintah Desa Ngringo melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -51,6 +56,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-ngringo-tusi": {
     id: "opendata-ngringo-tusi",
+    category: "pemerintahan",
     title: "Tugas dan Fungsi Kepala Desa dan Perangkat Desa Ngringo",
     publisher: "Pemerintah Desa Ngringo melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -60,6 +66,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-sroyo-struktur": {
     id: "opendata-sroyo-struktur",
+    category: "pemerintahan",
     title: "Struktur Organisasi, Tugas, Wewenang dan Fungsi Pemerintah Desa Sroyo",
     publisher: "Pemerintah Desa Sroyo melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -70,6 +77,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-sroyo-visimisi": {
     id: "opendata-sroyo-visimisi",
+    category: "wilayah",
     title: "Visi dan Misi Desa Sroyo",
     publisher: "Pemerintah Desa Sroyo melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -79,6 +87,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "opendata-sroyo-kontak": {
     id: "opendata-sroyo-kontak",
+    category: "wilayah",
     title: "Profil dan Informasi Kontak Desa Sroyo",
     publisher: "Pemerintah Desa Sroyo melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -88,6 +97,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "kemendikdasmen-jaten": {
     id: "kemendikdasmen-jaten",
+    category: "statistik",
     title: "Data Pokok Pendidikan (Dapodik) Sekolah Negeri Kecamatan Jaten",
     publisher: "Kementerian Pendidikan Dasar dan Menengah RI",
     url: "https://referensi.data.kemdikbud.go.id",
@@ -97,6 +107,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "puskesmas-jaten-2": {
     id: "puskesmas-jaten-2",
+    category: "layanan",
     title: "Profil Wilayah Kerja Puskesmas Jaten II",
     publisher: "UPT Puskesmas Jaten II Kabupaten Karanganyar",
     url: "https://dinkes.karanganyarkab.go.id",
@@ -106,6 +117,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "setda-krg-surat-adminduk-2025": {
     id: "setda-krg-surat-adminduk-2025",
+    category: "layanan",
     title: "Surat Penekanan Terkait Pelayanan Adminduk di Desa (Nomor 400.12/702)",
     publisher: "Sekretariat Daerah Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -117,6 +129,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "kec-jaten-standar-pelayanan-2024": {
     id: "kec-jaten-standar-pelayanan-2024",
+    category: "layanan",
     title: "Keputusan Camat Jaten tentang Standar Pelayanan di Lingkungan Kecamatan Jaten",
     publisher: "Pemerintah Kecamatan Jaten (SIPPN KemenPAN-RB)",
     url: "https://sippn.menpan.go.id",
@@ -128,6 +141,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "kec-jaten-dip-2020": {
     id: "kec-jaten-dip-2020",
+    category: "layanan",
     title: "Daftar Informasi Publik Kecamatan Jaten 2020",
     publisher: "Pemerintah Kecamatan Jaten melalui Open Data Kabupaten Karanganyar",
     url: "https://opendata.karanganyarkab.go.id",
@@ -138,6 +152,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "rmol-jateng-pj-ngringo-2026": {
     id: "rmol-jateng-pj-ngringo-2026",
+    category: "pemerintahan",
     title: "Pemberitaan Pelantikan/Penunjukan Pj Kepala Desa Ngringo",
     publisher: "RMOL Jawa Tengah",
     url: "https://rmoljawatengah.id",
@@ -149,6 +164,7 @@ export const sourcesRegistry: Record<string, Source> = {
   },
   "artikel-pleret-dagen-2022": {
     id: "artikel-pleret-dagen-2022",
+    category: "pemerintahan",
     title: "Kunjungan Studi Banding Desa Dagen ke Kalurahan Pleret",
     publisher: "Pemerintah Kalurahan Pleret, Bantul",
     url: "https://pleret.kalurahan.web.id",

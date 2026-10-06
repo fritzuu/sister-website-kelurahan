@@ -9,7 +9,7 @@ interface NotFoundPageProps {
 export const NotFoundPage: React.FC<NotFoundPageProps> = ({ attemptedSlug }) => {
   usePageMeta(
     "Halaman Tidak Ditemukan",
-    "Halaman profil atau tautan yang Anda cari tidak tersedia dalam website tugas profil desa Kecamatan Jaten."
+    "Halaman profil atau tautan yang Anda cari tidak tersedia dalam direktori desa Kecamatan Jaten."
   );
 
   return (
@@ -27,7 +27,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ attemptedSlug }) => 
         <h1>Halaman Tidak Ditemukan</h1>
         <p style={{ color: "var(--color-text-muted)" }}>
           {attemptedSlug
-            ? `Profil desa dengan pengenal "${attemptedSlug}" tidak ditemukan dalam direktori proyek ini.`
+            ? `Profil desa dengan pengenal "${attemptedSlug}" tidak ditemukan dalam direktori desa.`
             : "Halaman yang Anda tuju tidak tersedia atau tautan telah berpindah."}
         </p>
 

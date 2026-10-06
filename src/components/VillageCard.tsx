@@ -1,34 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import type { Village } from "../types/village";
+import { getVillageImage } from "../utils/villageImages";
+import { LoadingImage } from "./Loading";
 
 interface VillageCardProps {
   village: Village;
 }
 
-const villageImages: Record<string, string> = {
-  dagen: "/images/Kantor-desa-dagen-jaten-karanganyar.jpg",
-  ngringo: "/images/Kantor-desa-ngringo-jaten-karanganyar.jpg",
-  sroyo: "/images/Kantor-desa-sroyo-jaten-karanganyar.jpg",
-};
-
 export const VillageCard: React.FC<VillageCardProps> = ({ village }) => {
   const populationTotal = village.population?.value.total;
   const areaHa = village.areaHa?.value;
   const dataYear = village.population?.asOf || "2024";
-  const bgImage = villageImages[village.slug] || "/images/balai_desa_hero.jpg";
+  const bgImage = getVillageImage(village.slug);
 
   return (
     <article className="village-card" aria-labelledby={`title-${village.slug}`}>
-      <div
-        className="village-card-top"
-        style={{
-          backgroundImage: `linear-gradient(to top, rgba(7, 31, 54, 0.94) 0%, rgba(7, 31, 54, 0.45) 55%, rgba(7, 31, 54, 0.2) 100%), url('${bgImage}')`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+      <div className="village-card-top">
+        <LoadingImage key={bgImage} className="village-card-photo" src={bgImage} />
         <div className="village-card-header">
           <span className="village-card-badge">Desa • Kecamatan Jaten</span>
           <h3 id={`title-${village.slug}`} className="village-card-title">
@@ -46,14 +35,14 @@ export const VillageCard: React.FC<VillageCardProps> = ({ village }) => {
           <div className="card-metric">
             <div className="card-metric-label">Luas Wilayah</div>
             <div className="card-metric-value">
-              {areaHa !== undefined ? `${areaHa.toLocaleString("id-ID")} ha` : "—"}
+              {areaHa !== undefined ? `${areaHa.toLocaleString("id-ID")} ha` : "Tidak tersedia"}
             </div>
             <div className="card-metric-year">BPS {village.areaHa?.asOf || dataYear}</div>
           </div>
           <div className="card-metric">
             <div className="card-metric-label">Penduduk</div>
             <div className="card-metric-value">
-              {populationTotal !== undefined ? populationTotal.toLocaleString("id-ID") : "—"}
+              {populationTotal !== undefined ? populationTotal.toLocaleString("id-ID") : "Tidak tersedia"}
             </div>
             <div className="card-metric-year">BPS {dataYear}</div>
           </div>

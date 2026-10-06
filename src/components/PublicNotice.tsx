@@ -1,27 +1,24 @@
 import React from "react";
 
 interface PublicNoticeProps {
-  type?: "academic" | "warning" | "info";
+  type?: "warning" | "info";
   children?: React.ReactNode;
 }
 
 export const PublicNotice: React.FC<PublicNoticeProps> = ({
-  type = "academic",
+  type = "info",
   children
 }) => {
   const isWarning = type === "warning";
+  if (!children) return null;
 
   return (
     <div
       className={`public-notice ${isWarning ? "public-notice-warning" : ""}`}
       role="note"
-      aria-label="Pemberitahuan Proyek Akademik"
+      aria-label="Informasi Layanan"
     >
-      {children || (
-        <p>
-          <strong>Catatan Akademik:</strong> Website ini merupakan luaran tugas proyek sistem terdistribusi untuk tujuan penyajian informasi profil wilayah. Website ini <em>bukan kanal layanan resmi</em> Pemerintah Desa dan tidak menyelenggarakan transaksi administrasi publik daring.
-        </p>
-      )}
+      {children}
     </div>
   );
 };

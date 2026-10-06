@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { districtContact } from "../content/site";
 
 export const SiteFooter: React.FC = () => {
   return (
@@ -9,13 +10,10 @@ export const SiteFooter: React.FC = () => {
           <div className="footer-grid">
             {/* Column 1: Tentang */}
             <div className="footer-col">
-              <h4 className="footer-col-title">Tentang Proyek</h4>
+              <h4 className="footer-col-title">Tentang Website</h4>
               <p className="footer-description">
-                <strong>Jaten — Profil Tiga Desa</strong> adalah proyek kurasi informasi akademik yang menyajikan profil wilayah, demografi penduduk 2024, kelembagaan desa, serta katalog dokumen sumber untuk Desa Dagen, Desa Ngringo, dan Desa Sroyo.
+                <strong>Jaten: Profil Tiga Desa</strong> menyajikan informasi wilayah, kependudukan, pemerintahan, layanan, dan lokasi Desa Dagen, Desa Ngringo, serta Desa Sroyo.
               </p>
-              <div className="footer-disclaimer">
-                <strong>Pemberitahuan:</strong> Website ini merupakan proyek tugas kuliah Sistem Terdistribusi dan <em>bukan kanal resmi</em> pemerintah desa maupun kabupaten. Tidak menyelenggarakan layanan administrasi perizinan warga daring.
-              </div>
             </div>
 
             {/* Column 2: Navigasi Tiga Desa */}
@@ -75,9 +73,9 @@ export const SiteFooter: React.FC = () => {
                 Kecamatan Jaten, Kabupaten Karanganyar, Jawa Tengah
               </p>
               <div style={{ fontSize: "0.8rem", color: "#C4D2CC", lineHeight: 1.6 }}>
-                <div>Jl. Raya Jaten No. 85</div>
-                <div>Telp: (0271) 821319</div>
-                <div>Web: jaten.karanganyarkab.go.id</div>
+                <div>{districtContact.address}</div>
+                <div>Telp: {districtContact.phone}</div>
+                <div><a href={districtContact.website} target="_blank" rel="noopener noreferrer">Website Kecamatan Jaten ↗</a></div>
               </div>
             </div>
           </div>
@@ -89,7 +87,7 @@ export const SiteFooter: React.FC = () => {
           <div>
             Pembaruan Terakhir: 4 Oktober 2026 • Sumber Data: BPS Kabupaten Karanganyar 2024 (Rilis 2025)
           </div>
-          <div>Proyek Akademik — Sistem Terdistribusi • Kecamatan Jaten</div>
+          <div>Dagen • Ngringo • Sroyo</div>
         </div>
       </div>
     </footer>

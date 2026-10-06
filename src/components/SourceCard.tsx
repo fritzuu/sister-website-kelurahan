@@ -2,6 +2,7 @@ import React from "react";
 import type { Source } from "../types/village";
 import { SourceBadge } from "./SourceBadge";
 import { FileTextIcon, ExternalLinkIcon } from "./Icons";
+import { getSourceLinkLabel } from "../utils/sourceLinks";
 
 interface SourceCardProps {
   source: Source;
@@ -9,14 +10,14 @@ interface SourceCardProps {
 }
 
 export const SourceCard: React.FC<SourceCardProps> = ({ source, status = "verified" }) => {
-  const displayYear = source.dataYear || (source.publishedAt ? source.publishedAt.slice(0, 4) : "2024");
+  const displayYear = source.dataYear || (source.publishedAt ? source.publishedAt.slice(0, 4) : undefined);
 
   return (
     <article className="source-card" aria-labelledby={`src-title-${source.id}`}>
       <div className="source-card-header">
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <FileTextIcon size={18} color="var(--color-primary)" />
-          <span className="source-card-year">Tahun {displayYear}</span>
+          <span className="source-card-year">{displayYear ? `Tahun ${displayYear}` : "Rujukan Informasi"}</span>
         </div>
         <SourceBadge status={status} />
       </div>
@@ -48,9 +49,9 @@ export const SourceCard: React.FC<SourceCardProps> = ({ source, status = "verifi
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-secondary btn-sm"
-          aria-label={`Buka dokumen rujukan ${source.title}`}
+          aria-label={`${getSourceLinkLabel(source)}: ${source.title}`}
         >
-          Lihat Dokumen
+          {getSourceLinkLabel(source)}
           <ExternalLinkIcon size={13} />
         </a>
       </div>
