@@ -1,7 +1,10 @@
+export type SourceCategory = "statistik" | "pemerintahan" | "layanan" | "wilayah";
+
 export type Source = {
   id: string;
   title: string;
   publisher: string;
+  category: SourceCategory;
   url: string;
   publishedAt?: string; // ISO date jika tersedia
   dataYear?: number;

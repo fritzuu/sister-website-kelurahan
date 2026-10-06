@@ -79,6 +79,12 @@ export const VillageSectionNav: React.FC<VillageSectionNavProps> = ({
             </li>
           )}
           <li>
+            <a href="#peta-kantor" className="section-nav-link">
+              <MapPinIcon size={15} />
+              <span>Peta Pelayanan</span>
+            </a>
+          </li>
+          <li>
             <a href="#sumber-halaman" className="section-nav-link">
               <FileTextIcon size={15} />
               <span>Rujukan Dokumen</span>

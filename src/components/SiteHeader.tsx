@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { MobileVillageSelect } from "./MobileVillageSelect";
 import { PhoneIcon, MailIcon, CalendarIcon, ClockIcon } from "./Icons";
+import { districtContact } from "../content/site";
 
 export const SiteHeader: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -11,22 +12,28 @@ export const SiteHeader: React.FC = () => {
   const location = useLocation();
   const dropdownRef = useRef<HTMLLIElement>(null);
   const statsDropdownRef = useRef<HTMLLIElement>(null);
+  const dropdownButtonRef = useRef<HTMLButtonElement>(null);
+  const statsDropdownButtonRef = useRef<HTMLButtonElement>(null);
 
   // Live real-time clock in WIB format, matching government portal reference
   useEffect(() => {
+    const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Jakarta",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23",
+    });
+    const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Asia/Jakarta",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
     const updateClock = () => {
       const now = new Date();
-      // Format time as HH:mm:ss
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      const seconds = String(now.getSeconds()).padStart(2, "0");
-      setCurrentTime(`${hours}:${minutes}:${seconds} WIB`);
-
-      // Format date as DD-MM-YYYY
-      const day = String(now.getDate()).padStart(2, "0");
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const year = now.getFullYear();
-      setCurrentDate(`${day}-${month}-${year}`);
+      setCurrentTime(`${timeFormatter.format(now)} WIB`);
+      setCurrentDate(dateFormatter.format(now).replaceAll("/", "-"));
     };
 
     updateClock();
@@ -45,6 +52,11 @@ export const SiteHeader: React.FC = () => {
     };
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        if (dropdownRef.current?.contains(document.activeElement)) {
+          dropdownButtonRef.current?.focus();
+        } else if (statsDropdownRef.current?.contains(document.activeElement)) {
+          statsDropdownButtonRef.current?.focus();
+        }
         setDropdownOpen(false);
         setStatsDropdownOpen(false);
       }
@@ -62,34 +74,30 @@ export const SiteHeader: React.FC = () => {
 
   return (
     <>
-      {/* Top information bar — Ocean Blue matching kel-sondakan reference */}
+      {/* Top information bar: Ocean Blue matching kel-sondakan reference */}
       <div className="top-bar" role="banner">
         <div className="container">
           <div className="top-bar-left">
             <span className="top-bar-item">
               <PhoneIcon size={14} color="#BAE6FD" />
-              <span>(0271) 825123 (Kecamatan Jaten)</span>
+              <span>{districtContact.phone} (Kecamatan Jaten)</span>
             </span>
             <span className="top-bar-sep" aria-hidden="true" />
             <span className="top-bar-item">
               <MailIcon size={14} color="#BAE6FD" />
-              <span>info@jaten-karanganyar.id</span>
-            </span>
-            <span className="top-bar-sep" aria-hidden="true" />
-            <span className="top-bar-badge-academic">
-              Proyek Informasi Akademik — Sistem Terdistribusi
+              <a href={districtContact.website} target="_blank" rel="noopener noreferrer" style={{ color: "inherit" }}>Website Kecamatan Jaten</a>
             </span>
           </div>
 
           <div className="top-bar-right">
             <span className="top-bar-item">
               <CalendarIcon size={14} color="#BAE6FD" />
-              <span>{currentDate || "05-10-2026"}</span>
+              <span>{currentDate || "Tidak tersedia"}</span>
             </span>
             <span className="top-bar-sep" aria-hidden="true" />
             <span className="top-bar-item" style={{ fontFamily: "var(--font-mono)", fontWeight: 600 }}>
               <ClockIcon size={14} color="#BAE6FD" />
-              <span>{currentTime || "15:26:15 WIB"}</span>
+              <span>{currentTime || "Memuat waktu"}</span>
             </span>
           </div>
         </div>
@@ -99,7 +107,7 @@ export const SiteHeader: React.FC = () => {
       <header className="site-header">
         <div className="container">
           <div className="site-brand-group">
-            <Link to="/" className="site-logo" aria-label="Beranda — Jaten: Profil Tiga Desa">
+            <Link to="/" className="site-logo" aria-label="Beranda: Jaten: Profil Tiga Desa">
               <div className="site-brand-text">
                 <span className="brand-sup">KECAMATAN JATEN</span>
                 <span className="site-logo-title">Profil Tiga Desa</span>
@@ -125,19 +133,22 @@ export const SiteHeader: React.FC = () => {
               <li className="village-menu" ref={dropdownRef}>
                 <button
                   type="button"
+                  ref={dropdownButtonRef}
                   className={`village-dropdown-trigger ${currentSlug ? "active" : ""}`}
                   aria-expanded={dropdownOpen}
-                  aria-haspopup="true"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  aria-controls={dropdownOpen ? "village-navigation" : undefined}
+                  onClick={() => {
+                    setDropdownOpen(!dropdownOpen);
+                    setStatsDropdownOpen(false);
+                  }}
                 >
                   Profil Desa ▾
                 </button>
                 {dropdownOpen && (
-                  <ul className="village-dropdown-menu" role="menu">
-                    <li role="none">
+                  <ul id="village-navigation" className="village-dropdown-menu">
+                    <li>
                       <Link
                         to="/desa/dagen"
-                        role="menuitem"
                         className={`village-dropdown-item ${currentSlug === "dagen" ? "active" : ""}`}
                         onClick={() => setDropdownOpen(false)}
                       >
@@ -145,10 +156,9 @@ export const SiteHeader: React.FC = () => {
                         Desa Dagen
                       </Link>
                     </li>
-                    <li role="none">
+                    <li>
                       <Link
                         to="/desa/ngringo"
-                        role="menuitem"
                         className={`village-dropdown-item ${currentSlug === "ngringo" ? "active" : ""}`}
                         onClick={() => setDropdownOpen(false)}
                       >
@@ -156,10 +166,9 @@ export const SiteHeader: React.FC = () => {
                         Desa Ngringo
                       </Link>
                     </li>
-                    <li role="none">
+                    <li>
                       <Link
                         to="/desa/sroyo"
-                        role="menuitem"
                         className={`village-dropdown-item ${currentSlug === "sroyo" ? "active" : ""}`}
                         onClick={() => setDropdownOpen(false)}
                       >
@@ -175,44 +184,54 @@ export const SiteHeader: React.FC = () => {
               <li className="village-menu" ref={statsDropdownRef}>
                 <button
                   type="button"
+                  ref={statsDropdownButtonRef}
                   className="village-dropdown-trigger"
                   aria-expanded={statsDropdownOpen}
-                  aria-haspopup="true"
-                  onClick={() => setStatsDropdownOpen(!statsDropdownOpen)}
+                  aria-controls={statsDropdownOpen ? "statistics-navigation" : undefined}
+                  onClick={() => {
+                    setStatsDropdownOpen(!statsDropdownOpen);
+                    setDropdownOpen(false);
+                  }}
                 >
                   Statistik & Wilayah ▾
                 </button>
                 {statsDropdownOpen && (
-                  <ul className="village-dropdown-menu" role="menu">
-                    <li role="none">
-                      <a
-                        href="/#statistik"
-                        role="menuitem"
+                  <ul id="statistics-navigation" className="village-dropdown-menu">
+                    <li>
+                      <Link
+                        to="/#statistik"
                         className="village-dropdown-item"
                         onClick={() => setStatsDropdownOpen(false)}
                       >
                         Statistik Komparatif
-                      </a>
+                      </Link>
                     </li>
-                    <li role="none">
-                      <a
-                        href="/#konteks-wilayah"
-                        role="menuitem"
+                    <li>
+                      <Link
+                        to="/#konteks-wilayah"
                         className="village-dropdown-item"
                         onClick={() => setStatsDropdownOpen(false)}
                       >
                         Konteks Geografis
-                      </a>
+                      </Link>
                     </li>
-                    <li role="none">
-                      <a
-                        href="/#pembaruan"
-                        role="menuitem"
+                    <li>
+                      <Link
+                        to="/#peta-desa"
+                        className="village-dropdown-item"
+                        onClick={() => setStatsDropdownOpen(false)}
+                      >
+                        Peta Tiga Desa
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/#pembaruan"
                         className="village-dropdown-item"
                         onClick={() => setStatsDropdownOpen(false)}
                       >
                         Riwayat Pembaruan Data
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 )}
