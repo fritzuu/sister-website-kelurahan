@@ -1,9 +1,9 @@
 # Website Informasi Tiga Desa Kecamatan Jaten (Dagen, Ngringo, Sroyo)
 
-Website kurasi dan penyajian informasi profil wilayah, demografi, kelembagaan desa, serta rujukan sumber data untuk tiga desa di Kecamatan Jaten, Kabupaten Karanganyar, Jawa Tengah: **Desa Dagen**, **Desa Ngringo**, dan **Desa Sroyo**.
+Website profil wilayah yang menyajikan informasi demografi, geografis, kelembagaan desa, serta rujukan sumber data untuk tiga desa di Kecamatan Jaten, Kabupaten Karanganyar, Jawa Tengah: **Desa Dagen**, **Desa Ngringo**, dan **Desa Sroyo**. Website ini hadir dengan antarmuka yang modern, dinamis, dan responsif.
 
 > **PENTING / PERNYATAAN STATUS AKADEMIK**:
-> Website ini dibangun untuk memenuhi tugas akademik mata kuliah **Sistem Terdistribusi**. Website ini **BUKAN** merupakan website/portal layanan resmi Pemerintah Desa maupun Pemerintah Kabupaten Karanganyar. Website ini tidak melayani pengajuan surat, verifikasi berkas daring, transaksi administrasi warga, ataupun penyimpanan basis data kependudukan pribadi.
+> Website ini dibangun untuk memenuhi tugas akademik mata kuliah **Sistem Terdistribusi**. Website ini **BUKAN** merupakan website/portal layanan resmi Pemerintah Desa maupun Pemerintah Kabupaten Karanganyar. Website ini tidak melayani pengajuan surat, transaksi administrasi warga, ataupun penyimpanan basis data kependudukan pribadi.
 
 ---
 
@@ -147,15 +147,6 @@ Karena aplikasi ini adalah Single Page Application (SPA) berbasis `BrowserRouter
 
 Data profil desa tidak ditulis langsung secara statis di dalam JSX komponen, melainkan dikelola melalui model bertipe di folder `src/content/`.
 
-### Aturan Status Data (`status`):
-Setiap nilai data yang bersumber dibungkus dalam tipe `Sourced<T>` dengan salah satu dari tiga status:
-1. `verified`:
-   - Data telah diverifikasi dari dokumen primer resmi (misalnya rilis publikasi resmi BPS Kabupaten Karanganyar 2025 atau SK resmi bertanda tangan).
-2. `needs-confirmation`:
-   - Data tercatat dalam dokumen arsip publik atau portal web, namun belum memiliki tanggal SK/periode masa berlaku resmi atau masih memerlukan konfirmasi keabsahan terkini dari pihak kantor desa.
-3. `historical`:
-   - Data adalah catatan masa lalu (misalnya bagan struktur Perdes 2016, profil perangkat tahun 2023, atau pemberitaan kegiatan 2022). Data ini **tidak boleh** diklaim sebagai data kondisi aktif masa kini tanpa konfirmasi baru.
-
 ### Aturan Data Tidak Tersedia (Prinsip No-Placeholder Palsu):
 - Jika suatu data belum memiliki dasar dokumen valid (seperti nomor kontak pribadi perangkat, jam loket desa yang belum dikonfirmasi, atau teks visi-misi yang belum ditranskripsi), bagian tersebut **dikosongkan/disembunyikan** dari antarmuka publik (`undefined`).
 - Dilarang mengisi dengan tanda `"-"`, angka nol palsu, atau teks `Lorem Ipsum`.
@@ -164,8 +155,7 @@ Setiap nilai data yang bersumber dibungkus dalam tipe `Sourced<T>` dengan salah 
 Buka `src/content/villages.ts`:
 1. Sesuaikan field pada objek desa terkait (`dagen`, `ngringo`, atau `sroyo`).
 2. Masukkan ID rujukan sumber pada array `sourceIds`.
-3. Perbarui `asOf` (tahun data) dan `verifiedAt` (tanggal peninjauan tim).
-4. Tentukan status validitas: `"verified"`, `"needs-confirmation"`, atau `"historical"`.
+3. Perbarui `asOf` (tahun data) jika diperlukan.
 
 ### Cara Menambahkan Sumber Baru:
 Buka `src/content/sources.ts`:
